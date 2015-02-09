@@ -15,8 +15,8 @@
 		6D5A86E319AE5CD10066C1FD /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D5A86E219AE5CD10066C1FD /* SDL2.framework */; };
 		6D5AC2D019AE6280004CB1BF /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D5AC2CF19AE6280004CB1BF /* OpenGL.framework */; };
 		6D5AC2D219AE6A1E004CB1BF /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D5AC2D119AE6A1E004CB1BF /* SDL2_image.framework */; };
-		EE633A7B1A8960750068ED03 /* elementStone010.png in Resources */ = {isa = PBXBuildFile; fileRef = EE633A7A1A8960750068ED03 /* elementStone010.png */; };
-		EE633A7D1A8960990068ED03 /* ufoYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = EE633A7C1A8960990068ED03 /* ufoYellow.png */; };
+		EE633A811A8966690068ED03 /* ufoYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = EE633A801A8966690068ED03 /* ufoYellow.png */; };
+		EE633A831A89667F0068ED03 /* elementStone010.png in Resources */ = {isa = PBXBuildFile; fileRef = EE633A821A89667F0068ED03 /* elementStone010.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +34,8 @@
 		6D5A86E219AE5CD10066C1FD /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		6D5AC2CF19AE6280004CB1BF /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		6D5AC2D119AE6A1E004CB1BF /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
-		EE633A7A1A8960750068ED03 /* elementStone010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = elementStone010.png; path = "assets/graphics/Physics assets (330 assets)/PNG/Stone elements/elementStone010.png"; sourceTree = SOURCE_ROOT; };
-		EE633A7C1A8960990068ED03 /* ufoYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ufoYellow.png; path = "../../../Downloads/CS3113-1-master/assets/graphics/Space shooter assets (300 assets)/PNG/ufoYellow.png"; sourceTree = "<group>"; };
+		EE633A801A8966690068ED03 /* ufoYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ufoYellow.png; sourceTree = SOURCE_ROOT; };
+		EE633A821A89667F0068ED03 /* elementStone010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = elementStone010.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,8 +109,8 @@
 				6D5A86B519AE5C710066C1FD /* NYUCodebase-Info.plist */,
 				6D5A86B619AE5C710066C1FD /* InfoPlist.strings */,
 				6D5A86BC19AE5C710066C1FD /* Credits.rtf */,
-				EE633A7A1A8960750068ED03 /* elementStone010.png */,
-				EE633A7C1A8960990068ED03 /* ufoYellow.png */,
+				EE633A821A89667F0068ED03 /* elementStone010.png */,
+				EE633A801A8966690068ED03 /* ufoYellow.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -176,10 +176,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE633A7D1A8960990068ED03 /* ufoYellow.png in Resources */,
 				6D5A86B819AE5C710066C1FD /* InfoPlist.strings in Resources */,
 				6D5A86C619AE5C710066C1FD /* Images.xcassets in Resources */,
-				EE633A7B1A8960750068ED03 /* elementStone010.png in Resources */,
+				EE633A831A89667F0068ED03 /* elementStone010.png in Resources */,
+				EE633A811A8966690068ED03 /* ufoYellow.png in Resources */,
 				6D5A86BE19AE5C710066C1FD /* Credits.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

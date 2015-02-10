@@ -48,6 +48,7 @@ void DrawSprite(GLint texture, float x, float y, float rotation)
     glDrawArrays(GL_QUADS, 0, 4);
     glDisable(GL_TEXTURE_2D);
     
+    
 }
 GLuint LoadTexture(const char *image_path)
 {
@@ -76,8 +77,11 @@ int main(int argc, char *argv[])
     //////////////////////////////////////loading my texture
     GLuint something= LoadTexture("ufoYellow.png");
     GLuint somethingmore=LoadTexture("elementStone010.png");
+    GLuint another=LoadTexture("dieRed_border1.png");
+
     float lastFrameTicks = 0.0f;
     float angle=0;
+    
 	//drawing
     
 //    Vertex2D triangle[3] = {{0.0, 0.5, 1.0, 0.0, 0.0},
@@ -108,6 +112,8 @@ int main(int argc, char *argv[])
         DrawSprite(something, 0.8, 0.8, angle);
         drawTriangle();
         DrawSprite(somethingmore, -0.8, -0.8, angle);
+        DrawSprite(another, 0.0, 0.0, 0);
+        
 
        // drawTriangle();
 

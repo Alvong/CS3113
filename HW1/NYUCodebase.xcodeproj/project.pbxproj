@@ -17,6 +17,7 @@
 		6D5AC2D219AE6A1E004CB1BF /* SDL2_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D5AC2D119AE6A1E004CB1BF /* SDL2_image.framework */; };
 		EE633A811A8966690068ED03 /* ufoYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = EE633A801A8966690068ED03 /* ufoYellow.png */; };
 		EE633A831A89667F0068ED03 /* elementStone010.png in Resources */ = {isa = PBXBuildFile; fileRef = EE633A821A89667F0068ED03 /* elementStone010.png */; };
+		EEEEED321A8ABDA500902416 /* dieRed_border1.png in Resources */ = {isa = PBXBuildFile; fileRef = EEEEED311A8ABDA500902416 /* dieRed_border1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		6D5AC2D119AE6A1E004CB1BF /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../../../../../../Library/Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
 		EE633A801A8966690068ED03 /* ufoYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ufoYellow.png; sourceTree = SOURCE_ROOT; };
 		EE633A821A89667F0068ED03 /* elementStone010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = elementStone010.png; sourceTree = SOURCE_ROOT; };
+		EEEEED311A8ABDA500902416 /* dieRed_border1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dieRed_border1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				6D5A86BC19AE5C710066C1FD /* Credits.rtf */,
 				EE633A821A89667F0068ED03 /* elementStone010.png */,
 				EE633A801A8966690068ED03 /* ufoYellow.png */,
+				EEEEED311A8ABDA500902416 /* dieRed_border1.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 			files = (
 				6D5A86B819AE5C710066C1FD /* InfoPlist.strings in Resources */,
 				6D5A86C619AE5C710066C1FD /* Images.xcassets in Resources */,
+				EEEEED321A8ABDA500902416 /* dieRed_border1.png in Resources */,
 				EE633A831A89667F0068ED03 /* elementStone010.png in Resources */,
 				EE633A811A8966690068ED03 /* ufoYellow.png in Resources */,
 				6D5A86BE19AE5C710066C1FD /* Credits.rtf in Resources */,

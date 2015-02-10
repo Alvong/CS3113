@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     //////////////////////////////////////loading my texture
     GLuint something= LoadTexture("ufoYellow.png");
     GLuint somethingmore=LoadTexture("elementStone010.png");
-    GLuint another=LoadTexture("dieRed_border1.png");
+    //GLuint another=LoadTexture("dieRed_border1.png");
 
     float lastFrameTicks = 0.0f;
     float angle=0;
@@ -110,9 +110,10 @@ int main(int argc, char *argv[])
         glClear(GL_COLOR_BUFFER_BIT);
         //drawTriangle();
         DrawSprite(something, 0.8, 0.8, angle);
+        glLoadIdentity();
         drawTriangle();
         DrawSprite(somethingmore, -0.8, -0.8, angle);
-        DrawSprite(another, 0.0, 0.0, 0);
+       // DrawSprite(another, 0.0, 0.0, 0);
         
 
        // drawTriangle();

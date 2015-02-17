@@ -74,22 +74,22 @@ public:
     {
         
         if (abox->botleft[1]<=centery-0.05&&abox->topleft[1]>=centery+0.05){changedirectionx();}
-//        if(gety()>abox->centery+0.05){changedirectiony();
-//            changedirectionx();}
-//        if (gety()<abox->centery-0.05) {
+//      if(centery+0.05>=abox->topleft[1]){changedirectiony();
+//      }
+//      if (centery-0.05<=abox->botleft[1]) {
 //            changedirectiony();
-//            changedirectionx();
+//
 //        }
 
 }
     void detectcollisionleft(const box *abox)
     {
         if (abox->botright[1]<=centery-0.05&&abox->topright[1]>=centery+0.05){changedirectionx();}
-//        if(gety()>abox->centery+0.05){changedirectiony();
-//            changedirectionx();}
-//        if (gety()<abox->centery-0.05) {
+//      if(centery+0.05>=abox->topright[1]){changedirectiony();
+//           }
+//      if (centery-0.05<=abox->botright[1]) {
 //            changedirectiony();
-//            changedirectionx();
+//          
 //        }
 
     }
@@ -381,12 +381,12 @@ int main(int argc, char *argv[])
 //            ball.detectcollisionbot(&rightPad);
         }
 
-        if (ball.getx()>1.15)
+        if (ball.getx()>1)
         {
             drawBall(winner, -0.5, 0, 0);
             
         }
-        if(ball.getx()<-1.15) {
+        if(ball.getx()<-1) {
             drawBall(winner, 0.5, 0, 0);
         }
         if(abs(ball.gety())>1.2||abs(ball.getx())>1.2)

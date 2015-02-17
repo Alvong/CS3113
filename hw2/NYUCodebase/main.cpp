@@ -74,11 +74,26 @@ public:
     {
         
         if (abox->botleft[1]<=centery-0.05&&abox->topleft[1]>=centery+0.05){changedirectionx();}
-    }
+//        else{detectcollisionbot(abox);
+//            detectcollisiontop(abox);}
+}
     void detectcollisionleft(const box *abox)
     {
-        //cout<<abox->botright[1]<<"<"<<centery<<"<"<<abox->topright[1]<<endl;
         if (abox->botright[1]<=centery-0.05&&abox->topright[1]>=centery+0.05){changedirectionx();}
+//        else{detectcollisionbot(abox);
+//            detectcollisiontop(abox);}
+    }
+    void detectcollisiontop(const box *abox)
+    {
+        if(gety()<abox->topright[1]+0.05){changedirectiony();
+            changedirectionx();}
+    }
+    void detectcollisionbot(const box *abox)
+    {
+        if (gety()>abox->botright[1]-0.05) {
+            changedirectiony();
+            changedirectionx();
+        }
     }
 };
 class pad:public box
@@ -240,6 +255,10 @@ int main(int argc, char *argv[])
 	displayWindow = SDL_CreateWindow("My Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1200, 780, SDL_WINDOW_OPENGL);
 	SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
 	SDL_GL_MakeCurrent(displayWindow, context);
+    glViewport(0, 0, 1200, 780);
+    glMatrixMode(GL_PROJECTION_MATRIX);
+    glOrtho(-1, 1, -1, 1, -1, 1);
+    glMatrixMode(GL_PROJECTION_MATRIX);
 	bool done = false;
 	float lastFrameTicks = 0.0f;
     float ballrotation=0;
@@ -353,14 +372,16 @@ int main(int argc, char *argv[])
         
         if (ball.getx()<-.930+0.03) {
             ball.detectcollisionleft(&leftPad);
-            
+//            ball.detectcollisiontop(&leftPad);
+//            ball.detectcollisionbot(&leftPad);
         }
-        
         
         if (ball.getx()>.93-0.03) {
             ball.detectcollisionright(&rightPad);
+//            ball.detectcollisiontop(&rightPad);
+//            ball.detectcollisionbot(&rightPad);
         }
-        
+
         if (ball.getx()>1.15)
         {
             drawBall(winner, -0.5, 0, 0);

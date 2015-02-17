@@ -74,20 +74,20 @@ public:
     {
         
         if (abox->botleft[1]<=centery-0.05&&abox->topleft[1]>=centery+0.05){changedirectionx();}
-//      if(centery+0.05>=abox->topleft[1]){changedirectiony();
+//      if(centery+0.05<abox->topleft[1]){changedirectiony();
 //      }
-//      if (centery-0.05<=abox->botleft[1]) {
+//      if (centery-0.05>abox->botleft[1]) {
 //            changedirectiony();
 //
 //        }
-
+//
 }
     void detectcollisionleft(const box *abox)
     {
         if (abox->botright[1]<=centery-0.05&&abox->topright[1]>=centery+0.05){changedirectionx();}
-//      if(centery+0.05>=abox->topright[1]){changedirectiony();
+//      if(centery+0.05<=abox->topright[1]){changedirectiony();
 //           }
-//      if (centery-0.05<=abox->botright[1]) {
+//      if (centery-0.05>=abox->botright[1]) {
 //            changedirectiony();
 //          
 //        }

@@ -74,27 +74,26 @@ public:
     {
         
         if (abox->botleft[1]<=centery-0.05&&abox->topleft[1]>=centery+0.05){changedirectionx();}
-//        else{detectcollisionbot(abox);
-//            detectcollisiontop(abox);}
+//        if(gety()>abox->centery+0.05){changedirectiony();
+//            changedirectionx();}
+//        if (gety()<abox->centery-0.05) {
+//            changedirectiony();
+//            changedirectionx();
+//        }
+
 }
     void detectcollisionleft(const box *abox)
     {
         if (abox->botright[1]<=centery-0.05&&abox->topright[1]>=centery+0.05){changedirectionx();}
-//        else{detectcollisionbot(abox);
-//            detectcollisiontop(abox);}
+//        if(gety()>abox->centery+0.05){changedirectiony();
+//            changedirectionx();}
+//        if (gety()<abox->centery-0.05) {
+//            changedirectiony();
+//            changedirectionx();
+//        }
+
     }
-    void detectcollisiontop(const box *abox)
-    {
-        if(gety()<abox->topright[1]+0.05){changedirectiony();
-            changedirectionx();}
-    }
-    void detectcollisionbot(const box *abox)
-    {
-        if (gety()>abox->botright[1]-0.05) {
-            changedirectiony();
-            changedirectionx();
-        }
-    }
+       
 };
 class pad:public box
 {
@@ -102,11 +101,11 @@ public:
     pad(float x, float y):box(x,y)
     {
         topright[0]=x+0.02;
-        topright[1]=0.3;
+        topright[1]=0.15;
         topleft[0]=x-0.02;
         topleft[1]=topright[1];
         botright[0]=topright[0];
-        botright[1]=-0.3;
+        botright[1]=-0.15;
         botleft[0]=topleft[0];
         botleft[1]=botright[1];
     }
@@ -221,7 +220,7 @@ void drawPad(GLint texture, float x, float y, float rotation) {
     glLoadIdentity();
     glTranslatef(x, y, 0.0);
     glRotatef(rotation, 0.0, 0.0, 1.0);
-    GLfloat quad[] = {-.02, .3, -.02, -.3, .02, -.3, .02, .3};
+    GLfloat quad[] = {-.02, .15, -.02, -.15, .02, -.15, .02, .15};
     glVertexPointer(2, GL_FLOAT, 0, quad);
     glEnableClientState(GL_VERTEX_ARRAY);
     GLfloat quadUVs[] = {0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0};
@@ -285,35 +284,35 @@ int main(int argc, char *argv[])
             {
                 if(event.key.keysym.scancode == SDL_SCANCODE_UP)
                 {
-                    if (leftkey<0.7) {
+                    if (leftkey<0.85) {
                         drawPad(left, -0.94, leftkey+=.02*1, 0);
                         drawPad(right, 0.94, rightkey, 0);
                         leftPad.set(leftkey);
                     }
                     else {
-                        leftkey=0.7;
-                        drawPad(left, -0.94, 0.7, 0);
+                        leftkey=0.85;
+                        drawPad(left, -0.94, 0.85, 0);
                         drawPad(right, 0.94, rightkey, 0);
                         leftPad.max();
                         }
                 }
                 if(event.key.keysym.scancode == SDL_SCANCODE_DOWN)
                 {
-                    if (leftkey>-0.7) {
+                    if (leftkey>-0.85) {
                         drawPad(left, -0.94, leftkey-=.02*1, 0);
                         drawPad(right, 0.94, rightkey, 0);
                         leftPad.set(leftkey);;
                     }
                    else{
-                       leftkey=-0.7;
-                        drawPad(left, -0.94, -0.7, 0);
+                       leftkey=-0.85;
+                        drawPad(left, -0.94, -0.85, 0);
                         drawPad(right, 0.94, rightkey, 0);
                        leftPad.min();                    }
 
                 }
                 if(event.key.keysym.scancode == SDL_SCANCODE_LEFT)
                 {
-                    if (rightkey<0.7)
+                    if (rightkey<0.85)
                     {
                     drawPad(right, .94, rightkey+=.02*1, 0);
                     drawPad(left, -.94, leftkey, 0);
@@ -321,8 +320,8 @@ int main(int argc, char *argv[])
 
                     }
                     else
-                    {   rightkey=0.7;
-                        drawPad(right, .94, 0.7, 0);
+                    {   rightkey=0.85;
+                        drawPad(right, .94, 0.85, 0);
                         drawPad(left, -.94, leftkey, 0);
                         rightPad.max();
 
@@ -332,15 +331,15 @@ int main(int argc, char *argv[])
                 if(event.key.keysym.scancode == SDL_SCANCODE_RIGHT)
                 {
                     
-                    if (rightkey>-0.7)
+                    if (rightkey>-0.85)
                     {
                         drawPad(right, .94, rightkey-=.02*1, 0);
                         drawPad(left, -.94, leftkey, 0);
                         leftPad.set(rightkey);
                     }
                     else
-                    {   rightkey=-0.7;
-                        drawPad(right, .94, -0.7, 0);
+                    {   rightkey=-0.85;
+                        drawPad(right, .94, -0.85, 0);
                         drawPad(left, -.94, leftkey, 0);
                         rightPad.min();
                         

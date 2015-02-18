@@ -5,6 +5,8 @@
 #include<iostream>
 #include <cmath>
 using namespace std;
+class ball;
+class pad;//forward declaration
 class box
 {
 protected:
@@ -70,29 +72,7 @@ public:
     {return centerx;}
     int getDx(){return directionx;}
     int getDy(){return directiony;}
-    void detectcollisionright(const box *abox)
-    {
-        
-        if (abox->botleft[1]<=centery-0.05&&abox->topleft[1]>=centery+0.05){changedirectionx();}
-//      if(centery+0.05<abox->topleft[1]){changedirectiony();
-//      }
-//      if (centery-0.05>abox->botleft[1]) {
-//            changedirectiony();
-//
-//        }
-//
-}
-    void detectcollisionleft(const box *abox)
-    {
-        if (abox->botright[1]<=centery-0.05&&abox->topright[1]>=centery+0.05){changedirectionx();}
-//      if(centery+0.05<=abox->topright[1]){changedirectiony();
-//           }
-//      if (centery-0.05>=abox->botright[1]) {
-//            changedirectiony();
-//          
-//        }
-
-    }
+    friend void checkCollision(ball* aball,const pad* leftpad, const pad* rightpad);
        
 };
 class pad:public box
@@ -113,25 +93,25 @@ public:
     {
         topleft[1]=1;
         topright[1]=1;
-        botleft[1]=0.4;
-        botright[1]=0.4;
-        centery=0.7;
+        botleft[1]=0.7;
+        botright[1]=0.7;
+        centery=0.85;
         
     }
     void min()
     {
-        topleft[1]=-0.4;
-        topright[1]=-0.4;
+        topleft[1]=-0.7;
+        topright[1]=-0.7;
         botleft[1]=-1;
         botright[1]=-1;
-        centery=-0.7;
+        centery=-0.85;
     }
     void set(float value)
     {
         centery=value;
-        topright[1]=0.3+value;
+        topright[1]=0.15+value;
         topleft[1]=topright[1];
-        botright[1]=-0.3+value;
+        botright[1]=-0.15+value;
         botleft[1]=botright[1];
 
         
@@ -231,23 +211,32 @@ void drawPad(GLint texture, float x, float y, float rotation) {
     glDrawArrays(GL_QUADS, 0, 4);
     glDisable(GL_TEXTURE_2D);
 }
-//void checkCollision(ball* aball,const pad* leftpad, const pad* rightpad)
-//{
-//    cout<<aball->getDx()<<endl;
-//    if (abs(aball->gety())>=0.92) {
-//        aball->changedirectiony();
-//    }
-//    if (aball->getx()>=-.93) {
-//        aball->detectcollisionleft(leftpad);
-//           
-//        }
-//
-//    
-//    if (aball->getx()<=.93) {
-//        aball->detectcollisionright(rightpad);
-//        }
-//    
-//}
+void checkCollision(ball* aball,const pad* leftpad, const pad* rightpad)
+{   //if ball reach the ceiling or floor
+    if (abs(aball->centery)>=0.92) {
+        aball->changedirectiony();
+    }
+    //if ball reach leftpad
+    else if (aball->centerx < leftpad->centerx + 0.04 &&
+        aball->centerx + 0.1> leftpad->centerx &&
+        aball->centery < leftpad->centery + 0.3 &&
+        0.1 + aball->centery > leftpad->centery) {
+        aball->changedirectiony();
+        aball->changedirectionx();
+
+    }
+    //right pad
+    else if (aball->centerx < rightpad->centerx - 0.04 &&
+        aball->centerx + 0.1> rightpad->centerx &&
+        aball->centery < rightpad->centery + 0.3 &&
+        0.1 + aball->centery > rightpad->centery) {
+        aball->changedirectiony();
+        aball->changedirectionx();
+        
+    }
+
+    
+}
 int main(int argc, char *argv[])
 {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -264,8 +253,8 @@ int main(int argc, char *argv[])
     ball ball(0,0);
     pad leftPad(-0.94,0);
     pad rightPad(0.94,0);
-    float leftkey=leftPad.gety();
-    float rightkey=rightPad.gety();
+    float leftkey=0;
+    float rightkey=0;
     GLuint aball=LoadTexture("derp.png");
     GLuint mid=LoadTexture("grey_sliderVertical.png");
     GLuint left=LoadTexture("stoneLeft.png");
@@ -296,7 +285,7 @@ int main(int argc, char *argv[])
                         leftPad.max();
                         }
                 }
-                if(event.key.keysym.scancode == SDL_SCANCODE_DOWN)
+                else if(event.key.keysym.scancode == SDL_SCANCODE_DOWN)
                 {
                     if (leftkey>-0.85) {
                         drawPad(left, -0.94, leftkey-=.02*1, 0);
@@ -310,7 +299,7 @@ int main(int argc, char *argv[])
                        leftPad.min();                    }
 
                 }
-                if(event.key.keysym.scancode == SDL_SCANCODE_LEFT)
+               else if(event.key.keysym.scancode == SDL_SCANCODE_LEFT)
                 {
                     if (rightkey<0.85)
                     {
@@ -328,7 +317,7 @@ int main(int argc, char *argv[])
                     }
 
                 }
-                if(event.key.keysym.scancode == SDL_SCANCODE_RIGHT)
+               else if(event.key.keysym.scancode == SDL_SCANCODE_RIGHT)
                 {
                     
                     if (rightkey>-0.85)
@@ -365,22 +354,7 @@ int main(int argc, char *argv[])
         lastFrameTicks = ticks;
         ballrotation+=elapsed*200;
         drawMid(mid, 0, 0, 0);
-        if (abs(ball.gety())>=0.92) {
-            ball.changedirectiony();
-        }
-        
-        if (ball.getx()<-.930+0.03) {
-            ball.detectcollisionleft(&leftPad);
-//            ball.detectcollisiontop(&leftPad);
-//            ball.detectcollisionbot(&leftPad);
-        }
-        
-        if (ball.getx()>.93-0.03) {
-            ball.detectcollisionright(&rightPad);
-//            ball.detectcollisiontop(&rightPad);
-//            ball.detectcollisionbot(&rightPad);
-        }
-
+        checkCollision(&ball, &leftPad, &rightPad);
         if (ball.getx()>1)
         {
             drawBall(winner, -0.5, 0, 0);
@@ -391,7 +365,7 @@ int main(int argc, char *argv[])
         }
         if(abs(ball.gety())>1.2||abs(ball.getx())>1.2)
         {ball.resetBall(0, 0,-ball.getDx());}
-        ball.move(.01*ball.getDx(), .013*ball.getDy());
+        ball.move(.008*ball.getDx(), .01*ball.getDy());
         drawBall(aball,ball.getx(), ball.gety(), ballrotation);
         if(event.key.keysym.scancode == SDL_SCANCODE_SPACE)
         {

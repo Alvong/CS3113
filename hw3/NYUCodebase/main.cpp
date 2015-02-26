@@ -239,7 +239,7 @@ private:
 public:
     
 
-    spaceInvader():done(false),lastFrameTicks(0.0),enemies(NULL),state(STATE_MAIN_MENU),fonts(0),limitx(0),limity(0)
+    spaceInvader():done(false),lastFrameTicks(0.0),enemies(NULL),state(STATE_MAIN_MENU),fonts(0),limitx(0.0),limity(0.0)
     {
         
     }
@@ -571,34 +571,23 @@ public:
                 
             }
         
-
-        
-            if(limitx<0.2)
+            cout<<limitx<<endl;
+            for(enemy *one: enemies)
             {
-                for(enemy *one: enemies)
-                {
-                    one->y-=(0.0004*one->direction);
-                    one->x+=(0.0002*one->direction);
-                }
-                limitx+=0.0002;
-                limity+=0.0004;
+                if(limitx<0.2){one->x+=(0.001*one->direction);}
+                if(limitx>=0.2&&limitx<0.6){one->x-=(0.001*one->direction);}
+                if(limitx>=0.6&&limitx<1.2){one->x+=(0.001*one->direction);}
+                if(limitx>1.2){one->x-=(0.001*one->direction);}
+                one->y-=(0.001*one->direction);
+                //one->x+=(0.002*one->direction);
+                
             }
-            else if(limitx>=0.2)
-            {
-                for(enemy *one: enemies)
-                {
-                    one->y-=(0.0004*one->direction);
-                    one->x-=(0.0002*one->direction);
-                   
-                    
-                }
+            limitx+=0.001;
+            limity+=0.001;
 
-                limity+=0.0004;
-            }
-            if (limity>0.7) {
+            if (limity>0.8) {
                 state=STATE_GG;
             }
-        
         }
         timing+=elapsed;
         if (state==STATE_GG)

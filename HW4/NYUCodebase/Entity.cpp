@@ -102,6 +102,7 @@ void Entity::moving()
     y += velocity_y * FIXED_TIMESTEP;
     }
     
+    
 }
 void Entity::setTexture(float up, float vp, float w, float h)
 {

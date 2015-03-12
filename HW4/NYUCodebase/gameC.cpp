@@ -24,6 +24,7 @@ void DrawText(GLuint fontTexture, string text, float size, float spacing, float 
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glMatrixMode(GL_MODELVIEW);
     float texture_size = 1.0/16.0f;
     vector<float> vertexData;
     vector<float> texCoordData;
@@ -47,6 +48,7 @@ void DrawText(GLuint fontTexture, string text, float size, float spacing, float 
     glTexCoordPointer(2, GL_FLOAT, 0, texCoordData.data());
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glDrawArrays(GL_QUADS, 0, text.size() * 4.0);
+    glMatrixMode(GL_PROJECTION);
     glDisable(GL_TEXTURE_2D);
     glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -181,7 +183,7 @@ void gameC::Render() {
     glClear(GL_COLOR_BUFFER_BIT);
     if (state==STATE_GG) {
         glClear(GL_COLOR_BUFFER_BIT);
-         DrawText(LoadTexture("font2.png"), "THE END", .1, .0005, 1.0, 1.0, 1.0, 1.0,-1.0,-1.0);
+         DrawText(LoadTexture("font2.png"), "THE END", .1, .0005, 1.0, 1.0, 1.0, 1.0,0.0,0.0);
     }
     if (state==STATE_GAME) {
         
@@ -258,6 +260,7 @@ void gameC::Update(float elapsed) {
         
         player->velocity_y=1.7;
     }
+    
     player->moving();
     for (Entity *one: terrain) {
         player->collidesWith(one);
@@ -275,7 +278,7 @@ void gameC::Update(float elapsed) {
     }
     
     
-    if (enemies.size()==0) {
+    if (enemies.size()==0 || fabs(player->x)>1.5||fabs(player->y)>1.5) {
         state=STATE_GG;
     }
 

@@ -88,9 +88,9 @@ void gameC::Init() {
     
     /* initialize terrain and player set attributes*/
     //player texture
-    GLuint playertexture=LoadTexture("/Users/Alvong/Documents/game programming/HW4/NYUCodebase/alienYellow.png");
-    GLuint terrainEnemy=LoadTexture("/Users/Alvong/Documents/game programming/HW4/NYUCodebase/enemies.png");
-    GLuint back=LoadTexture("/Users/Alvong/Documents/game programming/HW4/NYUCodebase/xnt9w1.png");
+    GLuint playertexture=LoadTexture("alienYellow.png");
+    GLuint terrainEnemy=LoadTexture("enemies.png");
+    GLuint back=LoadTexture("xnt9w1.png");
     //making terrains
     makeTerrain(terrainEnemy);
     makeEnemies(terrainEnemy);

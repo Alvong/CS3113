@@ -36,7 +36,7 @@ void Entity::collidesWith(Entity *entity)
         velocity_y=0.0;
         isStatic=true;
         ypen=fabs((entity->y+entity->height/2)-(y-height/2));
-        //y+=ypen;
+        y+=ypen;
 
     }
     //collide top
@@ -47,7 +47,7 @@ void Entity::collidesWith(Entity *entity)
     {
         velocity_y=0.0;
         ypen=-fabs((y+height/2)-(entity->y-entity->height/2));
-        //y+=ypen;
+        y+=ypen;
 
     }
     //collide left
@@ -57,7 +57,7 @@ void Entity::collidesWith(Entity *entity)
         ) {
         velocity_x=0.0;
         xpen=fabs((entity->x+entity->width/2)-(x-width/2));
-        //x+=xpen;
+        x+=xpen;
     }
     //collide right
     else if ((x<entity->x)&&(entity->x-x)<(width/2+entity->width/2)&&
@@ -67,18 +67,16 @@ void Entity::collidesWith(Entity *entity)
     {
         velocity_x=0.0;
         xpen=-fabs((x+width/2)-(entity->x-entity->width/2));
-        //x+=xpen;
+        x+=xpen;
     }
     //if player tries to go out of screen
-    
-    y+=ypen;
-    x+=xpen;
     if (x>0.9) {
         x=0.9;
     }
-   else if (x<-.9) {
+    else if (x<-.9) {
         x=-.9;
     }
+
 
 }
 //when the snake collides withe player

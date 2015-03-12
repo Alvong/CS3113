@@ -143,7 +143,7 @@ void gameC::makeEnemies(unsigned int terrainEnemy)
 void gameC::makeTerrain(unsigned int terrainEnemy)
 {
     //push terrain onto vecoter
-    for (int i=0; i<26; ++i) {
+    for (int i=0; i<20; ++i) {
         
         Entity *temp=new Entity(terrainEnemy,0.0f/1024.0f,141.0f/512.0f,70.0f/1024.0f,69.5f/512.0f,(-0.98+0.08*i),-1.0);
         terrain.push_back(temp);
@@ -261,7 +261,6 @@ void gameC::Update(float elapsed) {
     player->moving();
     for (Entity *one: terrain) {
         player->collidesWith(one);
-        //player->collided();
     }
     
     for (int i=0; i<enemies.size(); i++)
@@ -274,6 +273,8 @@ void gameC::Update(float elapsed) {
         }
         
     }
+    
+    
     if (enemies.size()==0) {
         state=STATE_GG;
     }

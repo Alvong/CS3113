@@ -16,8 +16,11 @@ public:
     //void Render();
     void collidesWith(Entity *entity);
     //void FixedUpdate(int direction);
+    void reset();
+    void collideY(Entity *entity);
+    void collideX(Entity *entity);
+    void checkPen();
     void draw(float scale=0.5);
-//    void setPhysics(float mass, float accy, float accx, float fricy, float fricx);//sets friction, mass etc...
     void setTexture(float u, float v, float w, float h);
     void moving();
     float lerp(float v0, float v1, float t);
@@ -36,6 +39,8 @@ public:
     float friction_x;
     float friction_y;
     float mass;
+    float xpen;
+    float ypen;
     bool isStatic;
     bool enableCollisions;
     bool collidedTop;

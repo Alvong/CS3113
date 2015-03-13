@@ -11,7 +11,7 @@
 #include <iostream>
 #include "Entity.h"
 #define FIXED_TIMESTEP 0.0166666f
-Entity::Entity(unsigned int texture,float u, float v, float width, float height,float x,float y):texture(texture),u(u),v(v),width(width),height(height),velocity_x(0.0),velocity_y(0.0),acceleration_x(0.0),acceleration_y(-1.8),friction_x(-0.3),friction_y(0.0),mass(0.5),isStatic(true),enableCollisions(true),collidedTop(false),collidedBottom(false),collidedLeft(false),collidedRight(false),x(x),y(y)
+Entity::Entity(unsigned int texture,float u, float v, float width, float height,float x,float y):texture(texture),u(u),v(v),width(width),height(height),velocity_x(0.0),velocity_y(0.0),acceleration_x(0.0),acceleration_y(-1.8),friction_x(2.2),friction_y(0.2),mass(0.5),isStatic(true),enableCollisions(true),collidedTop(false),collidedBottom(false),collidedLeft(false),collidedRight(false),x(x),y(y),xpen(0.0),ypen(0.0)
 {
     
 }
@@ -22,63 +22,88 @@ float Entity::lerp(float v0, float v1, float t) {
 //void Entity::Update(float elapsed){}
 
 //void Entity::Render(){}
-
-void Entity::collidesWith(Entity *entity)
+void Entity::collideX(Entity *entity)
 {
-    float xpen=0.0;
-    float ypen=0.0;
-    //collide bot
-    if ((y>entity->y)&&(y-entity->y)<(height/2+entity->height/2)&&
-        x<(entity->x+entity->width/2)&&
-        x>(entity->x-entity->width/2)
-        )
-    {
-        velocity_y=0.0;
-        isStatic=true;
-        ypen=fabs((entity->y+entity->height/2)-(y-height/2));
-        y+=ypen;
-
-    }
-    //collide top
-    else if ((y<entity->y)&&(entity->y-y)<(height/2+entity->height/2)&&
-        x<(entity->x+entity->width/2)&&
-        x>(entity->x-entity->width/2)
-        )
-    {
-        velocity_y=0.0;
-        ypen=-fabs((y+height/2)-(entity->y-entity->height/2));
-        y+=ypen;
-
-    }
-    //collide left
+        //collide left
     if ((x>entity->x)&&(x-entity->x)<(width/2+entity->width/2)&&
-        y<(entity->y+entity->height/2)&&
-        y>(entity->y-entity->height/2)
-        ) {
-        velocity_x=0.0;
+             y<(entity->y+entity->height/2)&&
+             y>(entity->y-entity->height/2)
+             ) {
+        collidedLeft=true;
         xpen=fabs((entity->x+entity->width/2)-(x-width/2));
-        x+=xpen;
+       
     }
     //collide right
     else if ((x<entity->x)&&(entity->x-x)<(width/2+entity->width/2)&&
-        y<(entity->y+entity->height/2)&&
-        y>(entity->y-entity->height/2)
-        )
-    {
-        velocity_x=0.0;
+             y<(entity->y+entity->height/2)&&
+             y>(entity->y-entity->height/2)
+             )
+    {   collidedRight=true;
         xpen=-fabs((x+width/2)-(entity->x-entity->width/2));
-        x+=xpen;
     }
     //if player tries to go out of screen
-    if (x>0.9) {
+    else if (x>0.9) {
         x=0.9;
     }
     else if (x<-.9) {
         x=-.9;
     }
 
+    
+}
+void Entity::collideY(Entity *entity)
+{
+        //collide bot
+    if ((y>entity->y)&&(y-entity->y)<(height/2+entity->height/2)&&
+        x<(entity->x+entity->width/2)&&
+        x>(entity->x-entity->width/2)
+        )
+    {
+        collidedBottom=true;
+        ypen=fabs((entity->y+entity->height/2)-(y-height/2));
+        
+    }
+    //collide top
+    else if ((y<entity->y)&&(entity->y-y)<(height/2+entity->height/2)&&
+             x<(entity->x+entity->width/2)&&
+             x>(entity->x-entity->width/2)
+             )
+    {   collidedTop=true;
+        ypen=-fabs((y+height/2)-(entity->y-entity->height/2));
+        
+        
+    }
 
 }
+//checking penetration
+void Entity::checkPen()
+{
+    std::cout<<ypen<<std::endl;
+    
+    if (collidedTop) {
+        velocity_y=0.0;
+        y+=ypen;
+    }
+    else if (collidedBottom) {
+        velocity_y=0.0;
+        y+=ypen;
+    }
+    if (collidedLeft) {
+        velocity_x=0.0;
+        x+=xpen;
+    }
+    else if (collidedRight) {
+        velocity_x=0.0;
+        x+=xpen;
+    }
+    if (x>0.9) {
+        x=0.9;
+    }
+    else if  (x<-.9) {
+        x=-.9;
+    }
+   }
+
 //when the snake collides withe player
 bool Entity::collided(Entity* entity)
 {
@@ -86,23 +111,42 @@ bool Entity::collided(Entity* entity)
 
         return true;
     }
-    else{return false;}
+    else
+    {return false;}
 }
 
 void Entity::moving()
 {
-    if (isStatic==false)
+    if (!collidedRight&&!collidedLeft&&!collidedTop&&!collidedBottom)
     {
     
     velocity_x = Entity::lerp(velocity_x, 0.0f, FIXED_TIMESTEP * friction_x);
     velocity_x += acceleration_x * FIXED_TIMESTEP;
     x += velocity_x * FIXED_TIMESTEP;
-
+    velocity_y = lerp(velocity_y, 0.0f, FIXED_TIMESTEP * friction_y);
     velocity_y += acceleration_y * FIXED_TIMESTEP;
     y += velocity_y * FIXED_TIMESTEP;
     }
+    //if its on the ground only update the x 
+    else if(!collidedRight&&!collidedLeft&&!collidedTop&&collidedBottom)
+    {
+        velocity_x = Entity::lerp(velocity_x, 0.0f, FIXED_TIMESTEP * friction_x);
+        velocity_x += acceleration_x * FIXED_TIMESTEP;
+        x += velocity_x * FIXED_TIMESTEP;
+
+    }
     
     
+}
+void Entity::reset()
+{
+    collidedBottom=false;
+    collidedTop=false;
+    collidedLeft=false;
+    collidedRight=false;
+    xpen=0.0;
+    ypen=0.0;
+
 }
 void Entity::setTexture(float up, float vp, float w, float h)
 {

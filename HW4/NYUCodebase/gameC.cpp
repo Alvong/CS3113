@@ -125,6 +125,7 @@ void gameC::Init() {
     Entity *first=new Entity(playertexture, playerAnimation[0][0], playerAnimation[0][1], playerAnimation[0][2], playerAnimation[0][3],0.0,-0.9);
     player=first;
     backGround=back;//set background
+    player->isStatic=false;
     
 }
 gameC::~gameC() {
@@ -151,12 +152,12 @@ void gameC::makeTerrain(unsigned int terrainEnemy)
         terrain.push_back(temp);
         
     }
-    for (int i=0; i<10; ++i) {
+    for (int i=0; i<5; ++i) {
         
         Entity *temp=new Entity(terrainEnemy,0.0f/1024.0f,141.0f/512.0f,70.0f/1024.0f,69.5f/512.0f,(-0.98+0.08*i),-0.4);
         terrain.push_back(temp);
     }
-    for (int i=0; i<10; ++i) {
+    for (int i=0; i<5; ++i) {
         
         Entity *temp=new Entity(terrainEnemy,0.0f/1024.0f,141.0f/512.0f,70.0f/1024.0f,69.5f/512.0f,(0.98-0.08*i),-0.4);
         terrain.push_back(temp);
@@ -189,7 +190,7 @@ void gameC::Render() {
         
     drawBack();
     for (Entity* one: terrain) {
-        one->draw(0.6);
+        one->draw(0.5);
     }
     for (Entity* one: enemies) {
         one->draw(0.8);
@@ -215,7 +216,7 @@ void gameC::Update(float elapsed) {
      accelaration
      fix updata
      *///use player action for enemy movement
-    animationElapsed+=FIXED_TIMESTEP;
+    animationElapsed+=elapsed;
     if (animationElapsed>1.0/FRAME_PER_SEC) {
         playerAction++;
         animationElapsed=0.0;
@@ -226,8 +227,8 @@ void gameC::Update(float elapsed) {
     
   //if player moves
     
-    if(keys[SDL_SCANCODE_LEFT]){
-        player->isStatic=false;
+    if(keys[SDL_SCANCODE_LEFT]&&!player->collidedLeft){
+
         player->setTexture(
         playerAnimation[playerAction][0],
         playerAnimation[playerAction][1],
@@ -235,9 +236,9 @@ void gameC::Update(float elapsed) {
         playerAnimation[playerAction][3]
                            );
         player->velocity_x=-0.5;
+        
             }
-    if(keys[SDL_SCANCODE_RIGHT]){
-        player->isStatic=false;
+    if(keys[SDL_SCANCODE_RIGHT]&&!player->collidedRight){
         player->setTexture(
        playerAnimation[playerAction][0],
        playerAnimation[playerAction][1],
@@ -248,9 +249,10 @@ void gameC::Update(float elapsed) {
     }
 
     
-    if(keys[SDL_SCANCODE_UP]&&player->isStatic&&player->velocity_y==0.0){
-        player->isStatic=false;
+    if(keys[SDL_SCANCODE_UP]&&player->collidedBottom){
+       
         playerAction=2;
+        player->collidedBottom=false;
         player->setTexture(
        playerAnimation[playerAction][0],
        playerAnimation[playerAction][1],
@@ -260,22 +262,9 @@ void gameC::Update(float elapsed) {
         
         player->velocity_y=1.7;
     }
-    
     player->moving();
-    for (Entity *one: terrain) {
-        player->collidesWith(one);
-    }
-    
-    for (int i=0; i<enemies.size(); i++)
-    {
-        if(player->collided(enemies[i]))
-        {
-           
-            enemies[i]=nullptr;
-            enemies.erase(enemies.begin()+i);
-        }
-        
-    }
+    //player->checkPen();
+    player->reset();
     
     
     if (enemies.size()==0 || fabs(player->x)>1.5||fabs(player->y)>1.5) {
@@ -300,10 +289,32 @@ bool gameC::UpdateAndRender() {
     while (fixedElapsed >= FIXED_TIMESTEP )
     {
         fixedElapsed -= FIXED_TIMESTEP;
+        //player->moving();
+//fix update here
+        for (Entity *one: terrain) {
+            
+            player->collideY(one);
+            player->collideX(one);
+            
+        }
+        player->checkPen();
+
+        for (int i=0; i<enemies.size(); i++)
+        {
+            if(player->collided(enemies[i]))
+            {
+                
+                enemies[i]=nullptr;
+                enemies.erase(enemies.begin()+i);
+            }
+            
+        }
+        
     }
     timeLeftOver = fixedElapsed;
     Update(elapsed);
     Render();
+   // player->reset();
     return done;
 }
 

@@ -261,10 +261,10 @@ public:
         SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
         SDL_GL_MakeCurrent(displayWindow, context);
         Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 4096 );
-        GLuint terrain=LoadTexture("/Users/Alvong/Documents/game programming/hw55/NYUCodebase/spritesheet_rgba.png");
-        GLuint playertexture=LoadTexture("/Users/Alvong/Documents/game programming/hw55/NYUCodebase/george_0.png");
-       Mix_Music *music=Mix_LoadMUS("/Users/Alvong/Documents/game programming/hw55/NYUCodebase/Music.mp3");
-        Mix_Chunk *music2=Mix_LoadWAV("/Users/Alvong/Documents/game programming/hw55/NYUCodebase/punch-3.wav");
+        GLuint terrain=LoadTexture("spritesheet_rgba.png");
+        GLuint playertexture=LoadTexture("george_0.png");
+       Mix_Music *music=Mix_LoadMUS("Music.mp3");
+        Mix_Chunk *music2=Mix_LoadWAV("punch-3.wav");
         background=music;
         collide=music2;
         tiles=terrain;
@@ -502,7 +502,7 @@ public:
         float width=0;
         float height=0;
         string heightvalue,widthvalue;
-        ifstream infile("/Users/Alvong/Documents/game programming/hw55/NYUCodebase/map.txt");
+        ifstream infile("/Users/Alvong/Documents/game programming/NYUCodebase/CS3113/hw5_tile/NYUCodebase/map.txt");
         string line;
         vector<vector<int>> temp;
         while (getline(infile, line)) {

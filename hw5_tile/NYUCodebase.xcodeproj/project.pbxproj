@@ -20,6 +20,9 @@
 		EE779C6D1ABCD85700908B0E /* sss.txt in Resources */ = {isa = PBXBuildFile; fileRef = EE779C6C1ABCD85700908B0E /* sss.txt */; };
 		EE779C701ABCEC4A00908B0E /* george_0.png in Resources */ = {isa = PBXBuildFile; fileRef = EE779C6F1ABCEC4A00908B0E /* george_0.png */; };
 		EEBCCB011AC75D14006F4E37 /* map.txt in Resources */ = {isa = PBXBuildFile; fileRef = EEBCCB001AC75D14006F4E37 /* map.txt */; };
+		EEBCCB031AC8824D006F4E37 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEBCCB021AC8824D006F4E37 /* SDL2_mixer.framework */; };
+		EEBCCB131AC88C1D006F4E37 /* Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EEBCCB121AC88C1D006F4E37 /* Music.mp3 */; };
+		EEBCCB171AC88EBD006F4E37 /* punch-3.wav in Resources */ = {isa = PBXBuildFile; fileRef = EEBCCB161AC88EBD006F4E37 /* punch-3.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		EE779C6C1ABCD85700908B0E /* sss.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sss.txt; sourceTree = "<group>"; };
 		EE779C6F1ABCEC4A00908B0E /* george_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = george_0.png; sourceTree = "<group>"; };
 		EEBCCB001AC75D14006F4E37 /* map.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
+		EEBCCB021AC8824D006F4E37 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = ../../../../../Library/Frameworks/SDL2_mixer.framework; sourceTree = "<group>"; };
+		EEBCCB121AC88C1D006F4E37 /* Music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Music.mp3; sourceTree = "<group>"; };
+		EEBCCB161AC88EBD006F4E37 /* punch-3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "punch-3.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEBCCB031AC8824D006F4E37 /* SDL2_mixer.framework in Frameworks */,
 				6D5AC2D019AE6280004CB1BF /* OpenGL.framework in Frameworks */,
 				6D5A86AE19AE5C710066C1FD /* Cocoa.framework in Frameworks */,
 				6D5A86E319AE5CD10066C1FD /* SDL2.framework in Frameworks */,
@@ -79,6 +86,7 @@
 		6D5A86AC19AE5C710066C1FD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EEBCCB021AC8824D006F4E37 /* SDL2_mixer.framework */,
 				6D5AC2D119AE6A1E004CB1BF /* SDL2_image.framework */,
 				6D5AC2CF19AE6280004CB1BF /* OpenGL.framework */,
 				6D5A86E219AE5CD10066C1FD /* SDL2.framework */,
@@ -124,7 +132,9 @@
 			children = (
 				6D5A86B919AE5C710066C1FD /* main.cpp */,
 				EE779C6C1ABCD85700908B0E /* sss.txt */,
+				EEBCCB121AC88C1D006F4E37 /* Music.mp3 */,
 				EE779C511ABCBD1B00908B0E /* font2.png */,
+				EEBCCB161AC88EBD006F4E37 /* punch-3.wav */,
 				EE779C681ABCD5A000908B0E /* spritesheet_rgba.png */,
 				EEBCCB001AC75D14006F4E37 /* map.txt */,
 				EE779C6F1ABCEC4A00908B0E /* george_0.png */,
@@ -187,8 +197,10 @@
 			files = (
 				EE779C6D1ABCD85700908B0E /* sss.txt in Resources */,
 				EE779C691ABCD5A000908B0E /* spritesheet_rgba.png in Resources */,
+				EEBCCB131AC88C1D006F4E37 /* Music.mp3 in Resources */,
 				6D5A86B819AE5C710066C1FD /* InfoPlist.strings in Resources */,
 				EEBCCB011AC75D14006F4E37 /* map.txt in Resources */,
+				EEBCCB171AC88EBD006F4E37 /* punch-3.wav in Resources */,
 				EE779C551ABCBD1C00908B0E /* font2.png in Resources */,
 				6D5A86C619AE5C710066C1FD /* Images.xcassets in Resources */,
 				6D5A86BE19AE5C710066C1FD /* Credits.rtf in Resources */,
@@ -261,6 +273,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Library/Frameworks/SDL2_mixer.framework/Headers/,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -294,6 +311,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Library/Frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
@@ -315,6 +337,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/Library/Frameworks/SDL2_image.framework/Versions/A/Headers,
 					/Library/Frameworks/SDL2.framework/Versions/A/Headers,
+					/Library/Frameworks/SDL2_mixer.framework/Headers,
 				);
 				INFOPLIST_FILE = "NYUCodebase/NYUCodebase-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -338,6 +361,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/Library/Frameworks/SDL2_image.framework/Versions/A/Headers,
 					/Library/Frameworks/SDL2.framework/Versions/A/Headers,
+					/Library/Frameworks/SDL2_mixer.framework/Headers/SDL_mixer.h,
 				);
 				INFOPLIST_FILE = "NYUCodebase/NYUCodebase-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";

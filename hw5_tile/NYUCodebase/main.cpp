@@ -6,6 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <SDL_mixer.h>
 #define FIXED_TIMESTEP 0.0166666f
 #define MAX_TIMESTEPS 6
 #define FRAME_PER_SEC 10.0f
@@ -106,7 +107,7 @@ void DrawText(GLuint fontTexture, string text, float size, float spacing, float 
 class Entity {
 public:
     
-    Entity(unsigned int texture,int index, float x,float y):texture(texture),width(0.05),height(0.05),velocity_x(0.0),velocity_y(0.0),acceleration_x(0.0),acceleration_y(-1.8),friction_x(2.2),friction_y(0.2),mass(0.5),enableCollisions(true),collidedTop(false),collidedBottom(false),collidedLeft(false),collidedRight(false),x(x),y(y),index(index)
+    Entity(unsigned int texture,int index, float x,float y):texture(texture),width(0.04),height(0.04),velocity_x(0.0),velocity_y(0.0),acceleration_x(0.0),acceleration_y(-1.8),friction_x(2.2),friction_y(0.2),mass(0.5),enableCollisions(true),collidedTop(false),collidedBottom(false),collidedLeft(false),collidedRight(false),x(x),y(y),index(index)
     {
         
     }
@@ -121,7 +122,7 @@ public:
         float v = (float)(((int)index) / spritecountx) / (float) spritecounty;
         float spriteWidth = 1.0/(float)spritecountx;
         float spriteHeight = 1.0/(float)spritecounty;
-        GLfloat quad[] = {-0.05, 0.05, -0.05, -0.05, 0.05, -0.05, 0.05, 0.05};
+        GLfloat quad[] = {-0.04, 0.04, -0.04, -0.04, 0.04, -0.04, 0.04, 0.04};
         glVertexPointer(2, GL_FLOAT, 0, quad);
         glEnableClientState(GL_VERTEX_ARRAY);
         GLfloat quadUVs[] = { u, v,
@@ -167,6 +168,7 @@ public:
             x += velocity_x * FIXED_TIMESTEP;
             velocity_y=0.0;
         }
+        //if the player is not static move the camera with the same speed
         if(!isStatic()){
         camerax=-velocity_x*FIXED_TIMESTEP;
         cameray=-velocity_y*FIXED_TIMESTEP;
@@ -181,6 +183,10 @@ public:
         collidedLeft=false;
         collidedRight=false;
         
+    }
+    bool collided()
+    {
+        return (collidedTop);
     }
     bool isStatic()
     {   if(velocity_y==0.0&&velocity_x==0.0)
@@ -218,6 +224,8 @@ private:
     float lastFrameTicks;
     SDL_Window* displayWindow;
     Entity* player;
+    Mix_Music *background;
+    Mix_Chunk *collide;
     vector<vector<int>> leveldata;
     vector<vector<float>> playerdata;
     vector<vector<float>> enemydata;
@@ -226,20 +234,24 @@ private:
     int playerAnimation[3][2];
     int playerAction;
     int enemyAnimation[2];
-    unsigned int backGround;
+    unsigned int back;
     unsigned int tiles;
     float animationElapsed;
     std::vector<Entity*> enemies;
     GameState state;
 public:
-    gameC(): done(false),lastFrameTicks(0.0),timeLeftOver(0.0),playerAction(0),animationElapsed(0.0),state(STATE_GAME){
+    gameC(): done(false),lastFrameTicks(0.0),timeLeftOver(0.0),playerAction(0),animationElapsed(0.0),state(STATE_GAME),background(nullptr),collide(nullptr){
         Init();
         done = false;
         lastFrameTicks = 0.0f;
     }
     
     ~gameC(){
+        //Mix_FreeChunk(someSound);
+        Mix_FreeMusic(background);
         SDL_Quit();
+        SDL_Quit();
+        
     }
     
     void Init(){
@@ -248,9 +260,13 @@ public:
                                          SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_OPENGL);
         SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
         SDL_GL_MakeCurrent(displayWindow, context);
+        Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 4096 );
         GLuint terrain=LoadTexture("/Users/Alvong/Documents/game programming/hw55/NYUCodebase/spritesheet_rgba.png");
         GLuint playertexture=LoadTexture("/Users/Alvong/Documents/game programming/hw55/NYUCodebase/george_0.png");
-
+       Mix_Music *music=Mix_LoadMUS("/Users/Alvong/Documents/game programming/hw55/NYUCodebase/Music.mp3");
+        Mix_Chunk *music2=Mix_LoadWAV("/Users/Alvong/Documents/game programming/hw55/NYUCodebase/punch-3.wav");
+        background=music;
+        collide=music2;
         tiles=terrain;
         readleveldata();
         //player actions index: walking , jump
@@ -272,6 +288,7 @@ public:
         //player->isStatic=false;
         player->spritecountx=4;
         player->spritecounty=4;
+        Mix_PlayMusic(background, -1);
 
     }
     bool UpdateAndRender(){
@@ -288,26 +305,11 @@ public:
         {
             fixedElapsed -= FIXED_TIMESTEP;
             player->moving();
-            collision();
-            //fix update here
-            //        for (Entity *one: terrain) {
-            //
-            //            player->collideY(one);
-            //            player->collideX(one);
-            //
-            //        }
-            //player->checkPen();
             
-//            for (int i=0; i<enemies.size(); i++)
-//            {
-//                if(player->collided(enemies[i]))
-//                {
-//                    
-//                    enemies[i]=nullptr;
-//                    enemies.erase(enemies.begin()+i);
-//                }
-//                
-//            }
+            collision();
+            if (player->collided()) {
+                Mix_PlayChannel(1, collide, 0);
+            }
             
         }
         timeLeftOver = fixedElapsed;
@@ -329,7 +331,7 @@ public:
             //camera
             glTranslatef(player->camerax, player->cameray, 0.0);
             makeTerrain(tiles);
-            //makeEnemies(tiles);
+            
             
             glPushMatrix();
             player->draw();
@@ -354,7 +356,6 @@ public:
         if (playerAction>1) {
             playerAction=0;
         }
-        
         //if player moves
         
         if(keys[SDL_SCANCODE_LEFT]&&!player->collidedLeft){
@@ -379,8 +380,10 @@ public:
             player->index=playerAnimation[2][0];
             player->velocity_y=1.4;
         }
-        //player->moving();
+     
+        //reset the position every frame
         player->reset();
+        //if player falls
         if (player->y<-10.0) {
             state=STATE_GG;
         }
@@ -394,6 +397,7 @@ public:
                 if(leveldata[y][x] != 0)
                 {
                     glPushMatrix();
+                    //add 55 so the camera starts in the beginning
                     drawTile(tiles, x+55, y, leveldata[y][x]);
                     glPopMatrix();
 
@@ -433,12 +437,12 @@ public:
     {
         float xpen=0.0;
         //collide left
-        if ((player->x>worldX)&&(player->x-worldX)<(0.05f+TILE_SIZE/2.0f)&&
+        if ((player->x>worldX)&&(player->x-worldX)<(0.04f+TILE_SIZE/2.0f)&&
             player->y<(worldY+TILE_SIZE/2.0f)&&
             player->y>(worldY-TILE_SIZE/2.0f)
             ) {
             player->velocity_x=0.0;
-            xpen=fabs((worldX+TILE_SIZE/2.0f)-(player->x-0.05f));
+            xpen=fabs((worldX+TILE_SIZE/2.0f)-(player->x-0.04f));
             player->x+=xpen;
             player->collidedLeft=true;
             cout<<"grid"<<worldX<<","<<worldY<<endl;
@@ -446,13 +450,13 @@ public:
             
         }
         //collide right
-        else if ((player->x<worldX)&&(worldX-player->x)<(0.05f+TILE_SIZE/2.0f)&&
+        else if ((player->x<worldX)&&(worldX-player->x)<(0.04f+TILE_SIZE/2.0f)&&
                  player->y<(worldY+TILE_SIZE/2.0f)&&
                  player->y>(worldY-TILE_SIZE/2.0f)
                  )
         {
             player->velocity_x=0.0;
-            xpen=-fabs((player->x+0.05f)-(worldX-TILE_SIZE/2.0f));
+            xpen=-fabs((player->x+0.04f)-(worldX-TILE_SIZE/2.0f));
             player->x+=xpen;
             player->collidedRight=true;
             cout<<"grid"<<worldX<<","<<worldY<<endl;
@@ -463,14 +467,14 @@ public:
     }
     void checkY(const float worldX, const float worldY)
     {
-        if ((player->y>worldY)&&(player->y-worldY)<(0.05f+TILE_SIZE/2)&&
+        if ((player->y>worldY)&&(player->y-worldY)<(0.04f+TILE_SIZE/2)&&
                  player->x<(worldX+TILE_SIZE/2)&&
                  player->x>(worldX-TILE_SIZE/2)
                  )
         {
             player->collidedBottom=true;
             player->velocity_y=0.0;
-            float ypen=fabs(-(player->y-0.05f)+(worldY+TILE_SIZE/2));
+            float ypen=fabs(-(player->y-0.04f)+(worldY+TILE_SIZE/2));
             player->y+=ypen;
             cout<<"grid"<<worldX<<","<<worldY<<endl;
             player->cameray=0.0;
@@ -479,12 +483,12 @@ public:
         
         
        // collide top
-        else if ((player->y<worldY)&&(worldY-player->y)<(0.05f+TILE_SIZE/2)&&
+        else if ((player->y<worldY)&&(worldY-player->y)<(0.04f+TILE_SIZE/2)&&
                  player->x<(worldX+TILE_SIZE/2)&&
                   player->x>(worldX-TILE_SIZE/2)
                  )
         {   player->collidedTop=true;
-            float ypen=-fabs((player->y+0.05f)-(worldY-TILE_SIZE/2));
+            float ypen=-fabs((player->y+0.04f)-(worldY-TILE_SIZE/2));
             player->y+=ypen;
             cout<<"grid"<<worldX<<","<<worldY<<endl;
             player->cameray=0.0;
@@ -566,7 +570,7 @@ public:
                     float wxp;
                     float wyp;
                     tileToWorld(&wxp, &wyp, xp, yp);
-                    temp.push_back(wxp);//world offset
+                    temp.push_back(wxp+0.2);//world offset
                     temp.push_back(wyp);
                     playerdata.push_back(temp);
                     

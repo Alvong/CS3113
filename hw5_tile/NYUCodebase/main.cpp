@@ -107,7 +107,7 @@ void DrawText(GLuint fontTexture, string text, float size, float spacing, float 
 class Entity {
 public:
     
-    Entity(unsigned int texture,int index, float x,float y):texture(texture),width(0.04),height(0.04),velocity_x(0.0),velocity_y(0.0),acceleration_x(0.0),acceleration_y(-1.8),friction_x(2.2),friction_y(0.5),mass(0.5),enableCollisions(true),collidedTop(false),collidedBottom(false),collidedLeft(false),collidedRight(false),x(x),y(y),index(index)
+    Entity(unsigned int texture,int index, float x,float y):texture(texture),width(0.04),height(0.04),velocity_x(0.0),velocity_y(0.0),acceleration_x(0.0),acceleration_y(-1.8),friction_x(2.2),friction_y(0.1),mass(0.5),enableCollisions(true),collidedTop(false),collidedBottom(false),collidedLeft(false),collidedRight(false),x(x),y(y),index(index)
     {
         
     }
@@ -387,7 +387,7 @@ public:
         //reset the position every frame
         player->reset();
         //if player falls
-        if (player->y<-10.0) {
+        if (player->y<-5.0) {
             state=STATE_GG;
         }
         

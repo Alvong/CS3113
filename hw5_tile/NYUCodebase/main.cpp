@@ -107,7 +107,7 @@ void DrawText(GLuint fontTexture, string text, float size, float spacing, float 
 class Entity {
 public:
     
-    Entity(unsigned int texture,int index, float x,float y):texture(texture),width(0.04),height(0.04),velocity_x(0.0),velocity_y(0.0),acceleration_x(0.0),acceleration_y(-1.8),friction_x(2.2),friction_y(0.2),mass(0.5),enableCollisions(true),collidedTop(false),collidedBottom(false),collidedLeft(false),collidedRight(false),x(x),y(y),index(index)
+    Entity(unsigned int texture,int index, float x,float y):texture(texture),width(0.04),height(0.04),velocity_x(0.0),velocity_y(0.0),acceleration_x(0.0),acceleration_y(-1.8),friction_x(2.2),friction_y(0.5),mass(0.5),enableCollisions(true),collidedTop(false),collidedBottom(false),collidedLeft(false),collidedRight(false),x(x),y(y),index(index)
     {
         
     }
@@ -226,6 +226,7 @@ private:
     Entity* player;
     Mix_Music *background;
     Mix_Chunk *collide;
+    Mix_Chunk *jump;
     vector<vector<int>> leveldata;
     vector<vector<float>> playerdata;
     vector<vector<float>> enemydata;
@@ -264,9 +265,11 @@ public:
         GLuint terrain=LoadTexture("spritesheet_rgba.png");
         GLuint playertexture=LoadTexture("george_0.png");
        Mix_Music *music=Mix_LoadMUS("Music.mp3");
-        Mix_Chunk *music2=Mix_LoadWAV("punch-3.wav");
+        Mix_Chunk *music2=Mix_LoadWAV("/Users/Alvong/Documents/game programming/NYUCodebase/CS3113/hw5_tile/NYUCodebase/hit.wav");
+        Mix_Chunk *music3=Mix_LoadWAV("/Users/Alvong/Documents/game programming/NYUCodebase/CS3113/hw5_tile/NYUCodebase/jump.wav");
         background=music;
         collide=music2;
+        jump=music3;
         tiles=terrain;
         readleveldata();
         //player actions index: walking , jump
@@ -305,13 +308,9 @@ public:
         {
             fixedElapsed -= FIXED_TIMESTEP;
             player->moving();
-            
             collision();
-            if (player->collided()) {
-                Mix_PlayChannel(1, collide, 0);
-            }
-            
         }
+        
         timeLeftOver = fixedElapsed;
         Update(elapsed);
         Render();
@@ -379,8 +378,12 @@ public:
             player->collidedBottom=false;
             player->index=playerAnimation[2][0];
             player->velocity_y=1.4;
+            Mix_PlayChannel(1, jump, 0);
         }
-     
+        if (player->collidedTop) {
+            Mix_PlayChannel(1, collide, 1);
+        }
+
         //reset the position every frame
         player->reset();
         //if player falls
@@ -489,6 +492,7 @@ public:
                  )
         {   player->collidedTop=true;
             float ypen=-fabs((player->y+0.04f)-(worldY-TILE_SIZE/2));
+            player->velocity_y=0.0;
             player->y+=ypen;
             cout<<"grid"<<worldX<<","<<worldY<<endl;
             player->cameray=0.0;
@@ -570,7 +574,7 @@ public:
                     float wxp;
                     float wyp;
                     tileToWorld(&wxp, &wyp, xp, yp);
-                    temp.push_back(wxp+0.2);//world offset
+                    temp.push_back(wxp+0.6);//world offset
                     temp.push_back(wyp);
                     playerdata.push_back(temp);
                     

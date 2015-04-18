@@ -81,7 +81,7 @@ void identity();
 Matrix roate(float angle);
 Matrix operator * (const Matrix &m2);
 Vector operator * (const Vector &v2);
-Matrix translatef(float x, float y,float z);
+Matrix translate(float x, float y,float z);
 Matrix scale(float x,float y);
     
 };

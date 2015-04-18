@@ -24,23 +24,21 @@ public:
     float scale_y;
     float rotation;
     
-    Entity(float x, float y,float scalex=2,float scaley=2):x(x),y(y),scale_x(scalex),scale_y(scaley),rotation(0)
+    Entity(float x, float y,float scalex=1,float scaley=1):x(x),y(y),scale_x(scalex),scale_y(scaley),rotation(0)
     {
 
         vec.x=x;
         vec.y=y;
-        vec.z=0;
+        vec.z=1;
         
     }
     void draw()
     {
+        //my matrix class used row major ;/ so i have to use glMultTransposeMatrixf()
         build();
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
-        glMultMatrixf(matrix.ml);
-        //buildvec();
-        glTranslatef(x, y, 0.0);
-        //glRotatef(rotation, 0.0, 0.0, 1.0);
+        glMultTransposeMatrixf(matrix.ml);
         GLfloat quad[] = {-0.05f, 0.05f, -0.05f, -0.05f, 0.05f, -0.05f, 0.05f, 0.05f};
         glVertexPointer(2, GL_FLOAT, 0, quad);
         glEnableClientState(GL_VERTEX_ARRAY);
@@ -55,10 +53,8 @@ public:
         build();
         glMatrixMode(GL_MODELVIEW);
         glPushMatrix();
-        glMultMatrixf(matrix.ml);
-        //buildvec();
         glTranslatef(x, y, 0.0);
-        //glRotatef(rotation, 0.0, 0.0, 1.0);
+        glMultTransposeMatrixf(matrix.ml);
         GLfloat triangle[] = {-0.05f, 0.05f, -0.05f, -0.05f, 0.05f, -0.05f};
         glVertexPointer(2, GL_FLOAT, 0, triangle);
         glEnableClientState(GL_VERTEX_ARRAY);
@@ -77,8 +73,12 @@ public:
     }
     void build()
     {   //matrix.scale(scale_x, scale_y)*matrix.roate(rotation)**matrix.translatef(vec.x,vec.y,vec.z)
-        matrix= matrix.scale(scale_x,scale_y)*matrix.roate(rotation);
+        //matrix.identity();
+        matrix=matrix.scale(scale_x, scale_y)*matrix.roate(0)*matrix.translate(x,y,vec.z);
+        vec.x=x;
+        vec.y=y;
     }
+    //matrix.scale(scale_x,scale_y)*matrix.roate(rotation)*
 //    void buildvec()
 //    {
 //        
@@ -113,9 +113,15 @@ void Init() {
                                      SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_OPENGL);
     SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
     SDL_GL_MakeCurrent(displayWindow, context);
-    Entity *one=new Entity(0.0,0.0);
+    Entity *one=new Entity(0.5,0);
     player=one;
-
+    
+    Entity *enemy=new Entity(0.2,0.2);
+    objects.push_back(enemy);
+    Entity *enemy2=new Entity(-0.4,-0.2);
+    objects.push_back(enemy2);
+    Entity *enemy3=new Entity(-0.4,0.2);
+    objects.push_back(enemy3);
     
 }
     ~spacegame() {
@@ -126,8 +132,10 @@ void Render() {
     glClear(GL_COLOR_BUFFER_BIT);
     
 
-
     player->draw();
+    for (Entity* one: objects) {
+        one->drawObject();
+    }
     
     // render stuff
     SDL_GL_SwapWindow(displayWindow);
@@ -135,14 +143,40 @@ void Render() {
     
 }
 void Update(float elapsed) {
+    const Uint8 *keys = SDL_GetKeyboardState(NULL);
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
             done = true; }
         
     }
-    //player->vec.x+=0.05;
-    //player->rotation+=45;
+    if(keys[SDL_SCANCODE_LEFT]){
+    
+        player->x+=-0.01;
+        
+        
+    }
+    if(keys[SDL_SCANCODE_RIGHT]){
+        
+       player->x+=0.01;
+        
+    }
+    
+    
+    if(keys[SDL_SCANCODE_UP])
+    {
+        
+        player->y+=0.01;
+    }
+    if(keys[SDL_SCANCODE_DOWN]){
+        
+        player->y+=-0.01;
+        
+        
+    }
+
+
+    
 }
 bool UpdateAndRender()
     {
@@ -158,8 +192,9 @@ bool UpdateAndRender()
         {
             fixedElapsed -= FIXED_TIMESTEP;
             //fix update here
-            
-            
+            objects[0]->rotation+=45;
+            objects[1]->rotation+=-25;
+            player->rotation+=1;
         }
         timeLeftOver = fixedElapsed;
     Update(elapsed);

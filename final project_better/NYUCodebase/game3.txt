@@ -1,0 +1,294 @@
+[header]
+width=40
+height=20
+tilewidth=22
+tileheight=22
+orientation=orthogonal
+
+[tilesets]
+tileset=spritesheet2_rgba.png,22,22,0,0
+
+[layer]
+type=Tile Layer 1
+data=
+333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,
+583,572,573,571,572,573,571,572,573,571,572,573,572,571,572,573,572,571,572,573,571,571,572,573,571,571,572,573,573,573,573,573,573,571,572,573,571,572,571,583,
+583,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,583,
+583,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,583,
+303,303,303,303,303,303,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,583,
+333,333,333,333,333,333,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,333,333,0,0,0,0,0,583,
+583,0,0,333,333,333,303,0,0,0,303,303,0,0,0,0,0,303,303,303,303,303,303,303,303,303,303,0,0,0,0,333,333,333,0,0,333,333,0,583,
+583,0,0,333,333,333,333,0,0,0,333,333,0,0,0,0,0,333,333,333,333,333,333,333,333,333,333,0,0,0,0,333,333,333,0,0,333,333,0,583,
+303,303,0,333,333,333,333,0,0,0,333,333,0,0,0,0,0,333,333,333,0,0,333,333,333,333,333,0,0,0,0,333,333,333,0,0,333,333,0,583,
+333,333,0,0,0,0,0,0,0,0,333,333,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,333,333,0,0,333,333,0,583,
+333,333,0,0,0,0,0,0,0,0,333,333,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,333,333,0,0,333,333,0,583,
+333,333,303,303,303,0,0,303,303,303,333,333,333,333,333,333,333,333,333,333,333,333,333,333,0,0,333,333,333,0,0,333,333,333,0,0,333,333,0,583,
+333,333,333,333,333,0,0,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,0,0,333,333,333,0,0,333,333,333,0,0,333,333,0,583,
+583,0,0,0,0,0,0,0,0,333,333,333,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,333,333,0,0,333,333,333,0,0,333,333,0,583,
+583,0,0,0,0,0,0,0,0,333,333,333,0,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,0,0,333,333,333,0,0,333,333,0,583,
+583,0,0,0,0,0,0,0,0,333,333,333,0,333,0,0,0,0,0,0,0,0,0,0,0,0,333,333,333,0,0,333,333,333,0,0,333,333,0,583,
+583,0,0,0,0,0,0,0,0,333,333,333,0,333,333,333,333,333,333,333,333,333,333,333,0,0,333,333,333,0,0,333,333,333,0,0,333,333,0,583,
+583,0,0,0,0,0,0,0,0,333,333,333,0,0,0,0,0,0,0,0,0,0,0,0,0,0,333,333,333,0,0,333,333,333,0,0,333,333,0,583,
+303,303,303,303,303,303,303,303,303,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,0,0,333,333,333,0,0,333,333,333,333,
+333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,333,0,0,333,333,333,0,0,333,333,333,333
+
+[object]
+# ladder
+type=objects
+location=5,14,0,0
+
+[object]
+# ladder
+type=objects
+location=5,16,0,0
+
+[object]
+# ladder
+type=objects
+location=5,15,0,0
+
+[object]
+# ladder
+type=objects
+location=5,13,0,0
+
+[object]
+# ladder
+type=objects
+location=5,12,0,0
+
+[object]
+# ladder
+type=objects
+location=5,17,0,0
+
+[object]
+# ladder
+type=objects
+location=5,18,0,0
+
+[object]
+# ladder
+type=objects
+location=6,12,0,0
+
+[object]
+# ladder
+type=objects
+location=9,9,0,0
+
+[object]
+# ladder
+type=objects
+location=9,11,0,0
+
+[object]
+# ladder
+type=objects
+location=9,8,0,0
+
+[object]
+# ladder
+type=objects
+location=9,7,0,0
+
+[object]
+# ladder
+type=objects
+location=9,10,0,0
+
+[object]
+# ladder
+type=objects
+location=7,7,0,0
+
+[object]
+# ladder
+type=objects
+location=8,7,0,0
+
+[object]
+# ladder
+type=objects
+location=9,8,0,0
+
+[object]
+# ladder
+type=objects
+location=20,10,0,0
+
+[object]
+# ladder
+type=objects
+location=20,11,0,0
+
+[object]
+# ladder
+type=objects
+location=20,9,0,0
+
+[object]
+# ladder
+type=objects
+location=28,6,0,0
+
+[object]
+# ladder
+type=objects
+location=30,5,0,0
+
+[object]
+# ladder
+type=objects
+location=35,4,0,0
+
+[object]
+# ladder
+type=objects
+location=6,5,0,0
+
+[object]
+# ladder
+type=objects
+location=6,6,0,0
+
+[object]
+# ladder
+type=objects
+location=16,10,0,0
+
+[object]
+# ladder
+type=objects
+location=16,11,0,0
+
+[object]
+# ladder
+type=objects
+location=16,9,0,0
+
+[object]
+# ladder
+type=objects
+location=16,8,0,0
+
+[object]
+# ladder
+type=objects
+location=16,7,0,0
+
+[object]
+# ladder
+type=objects
+location=24,12,0,0
+
+[object]
+# ladder
+type=objects
+location=24,13,0,0
+
+[object]
+# ladder
+type=objects
+location=24,14,0,0
+
+[object]
+# ladder
+type=objects
+location=27,7,0,0
+
+[object]
+# ladder
+type=objects
+location=27,8,0,0
+
+[object]
+# ladder
+type=objects
+location=27,9,0,0
+
+[object]
+# ladder
+type=objects
+location=27,10,0,0
+
+[object]
+# ladder
+type=objects
+location=27,11,0,0
+
+[object]
+# ladder
+type=objects
+location=24,18,0,0
+
+[object]
+# ladder
+type=objects
+location=24,17,0,0
+
+[object]
+# ladder
+type=objects
+location=24,17,0,0
+
+[object]
+# ladder
+type=objects
+location=29,5,0,0
+
+[object]
+# player
+type=objects
+location=1,8,0,0
+
+[object]
+# food
+type=objects
+location=8,18,0,0
+
+[object]
+# food
+type=objects
+location=14,16,0,0
+
+[object]
+# food
+type=objects
+location=35,3,0,0
+
+[object]
+# food
+type=objects
+location=21,9,0,0
+
+[object]
+# food
+type=objects
+location=1,4,0,0
+
+[object]
+# enemy
+type=objects
+location=1,18,0,0
+
+[object]
+# enemy
+type=objects
+location=21,11,0,0
+
+[object]
+# enemy
+type=objects
+location=21,5,0,0
+
+[object]
+# enemy
+type=objects
+location=13,18,0,0
+
+[object]
+# door
+type=objects
+location=38,18,0,0
+
